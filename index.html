@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin(Jian) Lu — Academic Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #FAFAFA;
+            --surface: #FFFFFF;
+            --text: #1A1A2E;
+            --text-secondary: #555770;
+            --accent: #4361EE;
+            --accent-light: #E8EDFF;
+            --gradient-start: #4361EE;
+            --gradient-end: #7B2FF7;
+            --border: #E8E8F0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+            --radius: 16px;
+            --max-width: 900px;
+            --nav-height: 60px;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ============ NAVIGATION ============ */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: var(--nav-height);
+            background: rgba(250,250,250,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: box-shadow 0.3s ease;
+        }
+        nav.scrolled { box-shadow: var(--shadow-sm); }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links { display: flex; gap: 0.15rem; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.4rem 0.85rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--accent); background: var(--accent-light); }
+
+        .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 0.5rem; }
+        .mobile-toggle span { display: block; width: 20px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; transition: all 0.3s ease; }
+
+        /* ============ MAIN CONTENT WRAPPER ============ */
+        .page {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: calc(var(--nav-height) + 2.5rem) 2rem 3rem;
+        }
+
+        /* ============ ABOUT / HERO — compact side-by-side ============ */
+        .about {
+            display: grid;
+            grid-template-columns: 180px 1fr;
+            gap: 2.5rem;
+            align-items: start;
+            margin-bottom: 3.5rem;
+        }
+
+        .avatar-col { position: sticky; top: calc(var(--nav-height) + 2rem); }
+
+        .avatar-wrapper {
+            width: 160px;
+            height: 160px;
+            position: relative;
+        }
+
+        .avatar-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 50%;
+            opacity: 0.15;
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.15; }
+            50% { transform: scale(1.04); opacity: 0.25; }
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-light), #F0E6FF);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            font-family: 'Source Serif 4', serif;
+            color: var(--accent);
+            font-weight: 600;
+            border: 3px solid var(--surface);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+        .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Social icons row under avatar */
+        .social-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-top: 1rem;
+        }
+
+        .social-row a {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .social-row a:hover {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+        .social-row svg { width: 16px; height: 16px; }
+
+        /* Text column */
+        .about-text h1 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 2.4rem;
+            font-weight: 600;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.35rem;
+        }
+
+        .about-text h1 .highlight {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-tagline {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .about-bio {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.25rem;
+        }
+
+        .about-bio strong { color: var(--text); font-weight: 600; }
+        .about-bio a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+        .about-bio a:hover { text-decoration: underline; }
+
+        .about-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 1.25rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            color: #fff;
+            box-shadow: 0 3px 12px rgba(67,97,238,0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(67,97,238,0.4); }
+
+        .btn-outline {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        /* ============ SECTION SHARED ============ */
+        .section { margin-bottom: 3.5rem; }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-head::before {
+            content: '';
+            width: 4px;
+            height: 22px;
+            background: linear-gradient(180deg, var(--gradient-start), var(--gradient-end));
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .section-head h2 {
+            font-family: 'Source Serif 4', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        /* ============ PUBLICATIONS ============ */
+        .pub-list { display: flex; flex-direction: column; gap: 1rem; }
+
+        .pub-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.75rem;
+            transition: all 0.3s ease;
+        }
+        .pub-item:hover { box-shadow: var(--shadow-md); border-color: rgba(67,97,238,0.2); }
+
+        .pub-top {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .pub-year {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-light);
+            padding: 0.2rem 0.65rem;
+            border-radius: 50px;
+        }
+
+        .pub-venue {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .pub-title {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 0.35rem;
+        }
+
+        .pub-authors {
+            color: var(--text-secondary);
+            font-size: 0.87rem;
+            margin-bottom: 0.75rem;
+        }
+        .pub-authors strong { color: var(--text); font-weight: 600; }
+
+        .pub-links { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+
+        .pub-link {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 0.25rem 0.7rem;
+            border-radius: 6px;
+            border: 1.5px solid var(--accent);
+            transition: all 0.2s ease;
+        }
+        .pub-link:hover { background: var(--accent); color: #fff; }
+
+        /* ============ EDUCATION ============ */
+        .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+
+        .edu-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.5rem 1.75rem;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0 1.25rem;
+            align-items: start;
+            transition: all 0.3s ease;
+        }
+        .edu-item:hover { box-shadow: var(--shadow-md); }
+
+        .edu-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            margin-top: 6px;
+            box-shadow: 0 0 0 4px var(--accent-light);
+        }
+
+        .edu-content {}
+
+        .edu-date {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        .edu-degree {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.15rem;
+        }
+
+        .edu-school {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-desc {
+            color: var(--text-secondary);
+            font-size: 0.87rem;
+            line-height: 1.7;
+        }
+        .edu-desc a { color: var(--accent); text-decoration: none; }
+        .edu-desc a:hover { text-decoration: underline; }
+
+        /* ============ CV BANNER ============ */
+        .cv-banner {
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+            border-radius: var(--radius);
+            padding: 2rem 2.5rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+
+        .cv-banner h3 {
+            font-family: 'Source Serif 4', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .cv-banner p { opacity: 0.85; font-size: 0.92rem; }
+
+        .btn-cv {
+            background: #fff;
+            color: var(--accent);
+            font-weight: 700;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        .btn-cv:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.18); }
+
+        /* ============ CONTACT ROW ============ */
+        .contact-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+        }
+        .contact-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: rgba(67,97,238,0.2); }
+
+        .contact-card .c-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--accent-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .contact-card h4 { font-size: 0.85rem; font-weight: 600; }
+        .contact-card p { color: var(--text-secondary); font-size: 0.8rem; }
+
+        /* ============ FOOTER ============ */
+        footer {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ============ ANIMATIONS ============ */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 700px) {
+            .about {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 1.5rem;
+            }
+            .avatar-col { position: static; display: flex; flex-direction: column; align-items: center; }
+            .avatar-wrapper { width: 130px; height: 130px; }
+            .avatar { font-size: 3rem; }
+            .about-text h1 { font-size: 1.8rem; }
+            .about-links { justify-content: center; }
+            .page { padding-left: 1.25rem; padding-right: 1.25rem; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0; right: 0;
+                background: var(--surface);
+                flex-direction: column;
+                padding: 1rem;
+                border-bottom: 1px solid var(--border);
+                box-shadow: var(--shadow-md);
+            }
+            .nav-links.open { display: flex; }
+            .mobile-toggle { display: block; }
+            .cv-banner { padding: 1.5rem; text-align: center; flex-direction: column; }
+            .edu-item { grid-template-columns: 1fr; }
+            .edu-dot { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo">Kevin(Jian) Lu</a>
+        <div class="nav-links" id="navLinks">
+            <a href="#about" class="active">About</a>
+            <a href="#publications">Publications</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- PAGE -->
+<div class="page">
+
+    <!-- ====== ABOUT ====== -->
+    <div class="about fade-in" id="about">
+        <div class="avatar-col">
+            <div class="avatar-wrapper">
+                <div class="avatar">
+                    <img src="photo.jpg" alt="Kevin(Jian) Lu">
+                </div>
+            </div>
+            <div class="social-row">
+                <a href="https://scholar.google.com/" target="_blank" title="Google Scholar">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-3a4 4 0 100-8 4 4 0 000 8z"/><path d="M1 10L12 0l11 10H1z"/></svg>
+                </a>
+                <a href="https://github.com/" target="_blank" title="GitHub">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </a>
+                <a href="https://linkedin.com/" target="_blank" title="LinkedIn">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="mailto:jian.lu@duke.edu" title="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </a>
+            </div>
+        </div>
+
+        <div class="about-text">
+            <h1>Kevin(Jian) <span class="highlight">Lu</span></h1>
+            <div class="about-tagline">Master's Student · Duke University</div>
+            <p class="about-bio">
+                I am a Master's student in <strong>Computer Science</strong> at <strong>Duke University</strong>.
+                I am fortunate to work with Professor <a href="https://anruzhang.github.io" target="_blank"><strong>Anru Zhang</strong></a> on AI for Health, where I explore how advanced AI methods—particularly large language models and generative models—can improve clinical data understanding and healthcare applications.
+            </p>
+            <p class="about-bio">
+                Motivated by the fundamental challenges underlying current AI systems—such as efficiency, reasoning reliability, and scalability observed in real-world applications—I actively study the foundations of artificial intelligence, including efficient AI agent workflows, scalable reasoning in large language models, and memory and context management. My long-term goal is to develop more efficient and principled AI systems that better support real-world applications.
+            </p>
+            <p class="about-bio">
+                Previously, I obtained my B.S. in <strong>Computer Science</strong> from the <strong>University of Rochester</strong>,
+                where I worked with Professor <a href="https://www.cs.rochester.edu/u/jluo/" target="_blank"><strong>Jiebo Luo</strong></a> on computer vision methods for biomedical image analysis.
+            </p>
+            <div class="about-links">
+                <a href="#" class="btn btn-primary">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download CV
+                </a>
+                <a href="mailto:jian.lu@duke.edu" class="btn btn-outline">
+                    <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Email Me
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== PUBLICATIONS ====== -->
+    <div class="section fade-in" id="publications">
+        <div class="section-head">
+            <h2>Selected Publications</h2>
+        </div>
+        <div class="pub-list">
+            <div class="pub-item">
+                <div class="pub-top">
+                    <span class="pub-year">2026</span>
+                    <span class="pub-venue">IEEE International Conference on Healthcare Informatics (ICHI)</span>
+                </div>
+                <div class="pub-title">Reliable Curation of EHR Dataset via Large Language Models under Environmental Constraints</div>
+                <div class="pub-authors">Raymond M. Xiong, Panyu Chen, Tianze Dong, <strong>Jian Lu</strong>, Louis Hu, Nathan Yu, Benjamin Goldstein, Danyang Zhuo, Anru R. Zhang</div>
+                <div class="pub-links">
+                    <a href="https://arxiv.org/abs/2511.00772" class="pub-link" target="_blank">Paper</a>
+                </div>
+            </div>
+            <div class="pub-item">
+                <div class="pub-top">
+                    <span class="pub-year">2025</span>
+                    <span class="pub-venue">ICLR 2025 Workshop on Data Problems</span>
+                </div>
+                <div class="pub-title">Revisiting Multi-Modal LLM Evaluation</div>
+                <div class="pub-authors"><strong>Jian Lu</strong>, Shikhar Srivastava, Junyu Chen, Robik Shrestha, Manoj Acharya, Kushal Kafle, Christopher Kanan</div>
+                <div class="pub-links">
+                    <a href="https://arxiv.org/abs/2408.05334" class="pub-link" target="_blank">Paper</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== EDUCATION ====== -->
+    <div class="section fade-in" id="education">
+        <div class="section-head">
+            <h2>Education</h2>
+        </div>
+        <div class="edu-list">
+            <div class="edu-item">
+                <div class="edu-dot"></div>
+                <div class="edu-content">
+                    <div class="edu-date">2025 — Present</div>
+                    <div class="edu-degree">M.S. in Computer Science</div>
+                    <div class="edu-school">Duke University, Durham, NC</div>
+                    <div class="edu-desc">Advisor: Prof. <a href="https://anruzhang.github.io" target="_blank">Anru Zhang</a>. Research focus on AI for Health, efficient AI agent workflows, and scalable reasoning in large language models.</div>
+                </div>
+            </div>
+            <div class="edu-item">
+                <div class="edu-dot"></div>
+                <div class="edu-content">
+                    <div class="edu-date">2021 — 2025</div>
+                    <div class="edu-degree">B.S. in Computer Science</div>
+                    <div class="edu-school">University of Rochester, Rochester, NY</div>
+                    <div class="edu-desc">Worked with Prof. <a href="https://www.cs.rochester.edu/u/jluo/" target="_blank">Jiebo Luo</a> on computer vision methods for biomedical image analysis.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== CONTACT ====== -->
+    <div class="section fade-in" id="contact">
+        <div class="section-head">
+            <h2>Contact</h2>
+        </div>
+        <div class="contact-row">
+            <a href="mailto:jian.lu@duke.edu" class="contact-card">
+                <div class="c-icon">
+                    <svg width="18" height="18" fill="none" stroke="#4361EE" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                    <h4>Email</h4>
+                    <p>jian.lu@duke.edu</p>
+                </div>
+            </a>
+            <a href="https://scholar.google.com/" class="contact-card" target="_blank">
+                <div class="c-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#4361EE"><path d="M12 24a7 7 0 110-14 7 7 0 010 14zm0-3a4 4 0 100-8 4 4 0 000 8z"/><path d="M1 10L12 0l11 10H1z"/></svg>
+                </div>
+                <div>
+                    <h4>Google Scholar</h4>
+                    <p>View my publications</p>
+                </div>
+            </a>
+            <a href="https://github.com/" class="contact-card" target="_blank">
+                <div class="c-icon">
+                    <svg width="18" height="18" fill="#4361EE" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                </div>
+                <div>
+                    <h4>GitHub</h4>
+                    <p>View my code</p>
+                </div>
+            </a>
+            <a href="https://linkedin.com/" class="contact-card" target="_blank">
+                <div class="c-icon">
+                    <svg width="18" height="18" fill="#4361EE" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </div>
+                <div>
+                    <h4>LinkedIn</h4>
+                    <p>Connect with me</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <p>&copy; 2026 Kevin(Jian) Lu. Last updated February 2026.</p>
+</footer>
+
+<script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 20));
+
+    // Mobile toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navLinks = document.getElementById('navLinks');
+    mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(l => l.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('[id]');
+    const navItems = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => { if (scrollY >= s.offsetTop - 100) current = s.id; });
+        navItems.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+        });
+    });
+
+    // Fade-in
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>
