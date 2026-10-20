@@ -262,6 +262,33 @@
         }
 
         /* ============ PUBLICATIONS ============ */
+        /* ============ NEWS ============ */
+        .news-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .news-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 1rem;
+            align-items: baseline;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .news-date {
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.85rem;
+            white-space: nowrap;
+        }
+        .news-text a { color: var(--accent); text-decoration: none; }
+        .news-text a:hover { text-decoration: underline; }
+        @media (max-width: 700px) {
+            .news-item { grid-template-columns: 1fr; gap: 0.1rem; }
+        }
+
         .pub-list { display: flex; flex-direction: column; gap: 1rem; }
 
         .pub-item {
@@ -548,6 +575,7 @@
         <a href="#" class="nav-logo">Kevin(Jian) Lu</a>
         <div class="nav-links" id="navLinks">
             <a href="#about" class="active">About</a>
+            <a href="#news">News</a>
             <a href="#publications">Publications</a>
             <a href="#education">Education</a>
             <a href="#contact">Contact</a>
@@ -602,6 +630,23 @@
                 where I worked with Professor <a href="https://www.cs.rochester.edu/u/jluo/" target="_blank"><strong>Jiebo Luo</strong></a> on computer vision methods for biomedical image analysis, and with Professor <a href="https://chriskanan.com" target="_blank"><strong>Christopher Kanan</strong></a> on evaluating multimodal large language models.
             </p>
         </div>
+    </div>
+
+    <!-- ====== NEWS ====== -->
+    <div class="section fade-in" id="news">
+        <div class="section-head">
+            <h2>News</h2>
+        </div>
+        <ul class="news-list">
+            <li class="news-item">
+                <span class="news-date">Oct 2026</span>
+                <span class="news-text">Our work on documentation inconsistencies in EHRs has been accepted to <a href="https://arxiv.org/abs/2607.22954" target="_blank"><strong>JAMIA</strong></a>!</span>
+            </li>
+            <li class="news-item">
+                <span class="news-date">Aug 2026</span>
+                <span class="news-text">1st place (of 360 teams) at <a href="https://afac.alipay.com" target="_blank"><strong>AFAC 2026</strong></a>, automated-experimentation challenge.</span>
+            </li>
+        </ul>
     </div>
 
     <!-- ====== PUBLICATIONS ====== -->
